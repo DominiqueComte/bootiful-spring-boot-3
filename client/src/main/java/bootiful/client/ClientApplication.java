@@ -32,10 +32,9 @@ public class ClientApplication {
 	@Bean
 	CustomerHttpClient customerHttpClient(WebClient.Builder builder) {
 		var wc = builder.baseUrl("http://localhost:8080").build();
-		var wca = WebClientAdapter.forClient(wc);
+		var wca = WebClientAdapter.create(wc);
 		return HttpServiceProxyFactory
-				.builder()
-				.clientAdapter(wca)
+                .builder().exchangeAdapter(wca)
 				.build()
 				.createClient(CustomerHttpClient.class);
 	}
